@@ -42,12 +42,15 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- *               - name
+ *               - first_name
+ *               - last_name
  *               - email
  *               - password
  *               - role
  *             properties:
- *               name:
+ *               first_name:
+ *                 type: string
+ *               last_name:
  *                 type: string
  *               email:
  *                 type: string
@@ -62,7 +65,8 @@ module.exports = router;
  *                  type: string
  *                  enum: [user, admin]
  *             example:
- *               name: fake name
+ *               first_name: fake name
+ *               last_name: fake name
  *               email: fake@example.com
  *               password: password1
  *               role: user
