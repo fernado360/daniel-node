@@ -58,6 +58,21 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    available_balance: {
+      type: String,
+      required: false,
+      default: '0',
+    },
+    applied_loans: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    national_id: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
   {
     timestamps: true,
