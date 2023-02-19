@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const { toJSON, paginate } = require('./plugins');
 const { roles } = require('../config/roles');
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     first_name: {
       type: String,
@@ -73,6 +73,7 @@ const userSchema = mongoose.Schema(
       required: false,
       default: '',
     },
+    loans: [{ id: String, amount: Number, repayment_month: Number, monthly_payment: Number, status: String }],
   },
   {
     timestamps: true,
