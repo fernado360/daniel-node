@@ -9,7 +9,7 @@ const addLoan = catchAsync(async (req, res) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  user.loans.push(req.body);
+  user.loans.push({ ...req.body, approved: false, status: 'PENDING_APPROVAL' });
   user.save();
   res.send(user.loans);
 });
@@ -26,7 +26,17 @@ const updateLoan = catchAsync(async (req, res) => {
   res.send(user.loans);
 });
 
+const getLoan = catchAsync(async (req, res) => {
+  const user = await userService.getUserById(req.user.id);
+  //   console.log(user);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  res.send(user.loans);
+});
+
 module.exports = {
   addLoan,
   updateLoan,
+  getLoan,
 };

@@ -17,6 +17,7 @@ router.post('/set-user-as-admin', async (req, res) => {
 });
 
 router.post('/', auth(), validate(loanValidation.createLoan), loanController.addLoan);
+router.get('/', auth(), validate(), loanController.getLoan);
 router.patch('/:loanId', auth(), validate(loanValidation.createLoan), loanController.updateLoan);
 
 module.exports = router;
