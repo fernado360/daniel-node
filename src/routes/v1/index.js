@@ -3,6 +3,7 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const rolesRoute = require('./roles.route');
 const loanRoute = require('./loan.route');
+const notificationRoute = require('./notification.route');
 const docsRoute = require('./docs.route');
 // const config = require('../../config/config');
 
@@ -24,6 +25,10 @@ const defaultRoutes = [
   {
     path: '/loan',
     route: loanRoute,
+  },
+  {
+    path: '/notification',
+    route: notificationRoute,
   },
 ];
 

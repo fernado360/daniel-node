@@ -76,6 +76,7 @@ const userSchema = new mongoose.Schema(
     loans: [
       { id: String, amount: Number, repayment_month: Number, monthly_payment: Number, status: String, approved: Boolean },
     ],
+    notification: [{ message: String, status: String }],
   },
   {
     timestamps: true,

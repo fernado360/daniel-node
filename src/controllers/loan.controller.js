@@ -20,10 +20,20 @@ const updateLoan = catchAsync(async (req, res) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  const result = await user.loans.id(req.params.loanId);
-  Object.assign(result, req.body);
-  user.save();
-  res.send(user.loans);
+  // eslint-disable-next-line no-console
+  console.log(req.params);
+  const result = await user.loans.find((item) => item.id === req.params.loanId);
+  const resultIndex = await user.loans.findIndex((item) => item.id === req.params.loanId);
+  if (result) {
+    // Object.assign(user, req.body);
+    // eslint-disable-next-line no-console
+    // console.log(user);
+    user.loans[resultIndex] = Object.assign(result, req.body);
+    user.save();
+    res.send(user.loans);
+  } else {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Loan not found');
+  }
 });
 
 const getLoan = catchAsync(async (req, res) => {
