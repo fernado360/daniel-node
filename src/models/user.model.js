@@ -80,6 +80,7 @@ const userSchema = new mongoose.Schema(
     portfolio_balance: {
       type: String,
       required: true,
+      default: '0',
     },
   },
   {
