@@ -1,3 +1,7 @@
+const path = require('path');
+const handlebars = require('handlebars');
+const fs = require('fs');
+
 const nodemailer = require('nodemailer');
 const config = require('../config/config');
 const logger = require('../config/logger');
@@ -18,8 +22,8 @@ if (config.env !== 'test') {
  * @param {string} text
  * @returns {Promise}
  */
-const sendEmail = async (to, subject, text) => {
-  const msg = { from: config.email.from, to, subject, text };
+const sendEmail = async (to, subject, text, html = null) => {
+  const msg = { from: config.email.from, to, subject, text, html };
   await transport.sendMail(msg);
 };
 
@@ -32,7 +36,7 @@ const sendEmail = async (to, subject, text) => {
 const sendResetPasswordEmail = async (to, token) => {
   const subject = 'Reset password';
   // replace this url with the link to the reset password page of your front-end app
-  const resetPasswordUrl = `http://link-to-app/reset-password?token=${token}`;
+  const resetPasswordUrl = `https://daveonline.us/auth/login=${token}`;
   const text = `Dear user,
 To reset your password, click on this link: ${resetPasswordUrl}
 If you did not request any password resets, then ignore this email.`;
@@ -45,14 +49,26 @@ If you did not request any password resets, then ignore this email.`;
  * @param {string} token
  * @returns {Promise}
  */
-const sendVerificationEmail = async (to, token) => {
+const sendVerificationEmail = async (to, token, name) => {
   const subject = 'Email Verification';
   // replace this url with the link to the email verification page of your front-end app
-  const verificationEmailUrl = `http://link-to-app/verify-email?token=${token}`;
+  const verificationEmailUrl = `https://daveonline.us/auth/login?token=${token}`;
   const text = `Dear user,
 To verify your email, click on this link: ${verificationEmailUrl}
 If you did not create an account, then ignore this email.`;
-  await sendEmail(to, subject, text);
+
+  const __dirname = path.resolve();
+  const filePath = path.join(__dirname, '/src/emails/verification.html');
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const source = fs.readFileSync(filePath, 'utf-8').toString();
+  const template = handlebars.compile(source);
+  const replacement = {
+    name,
+    verificationEmailUrl,
+  };
+  const htmlToSend = template(replacement);
+
+  await sendEmail(to, subject, text, htmlToSend);
 };
 
 module.exports = {

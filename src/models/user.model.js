@@ -77,6 +77,10 @@ const userSchema = new mongoose.Schema(
       { id: String, amount: Number, repayment_month: Number, monthly_payment: Number, status: String, approved: Boolean },
     ],
     notification: [{ message: String, status: String }],
+    portfolio_balance: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
