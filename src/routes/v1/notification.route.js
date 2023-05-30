@@ -6,5 +6,6 @@ const notificationController = require('../../controllers/notification.controlle
 const router = express.Router();
 router.get('/', auth(), validate(), notificationController.getNotification);
 router.post('/', auth(), validate(), notificationController.addNotification);
+router.post('/:id', auth(), validate(), notificationController.addNotificationByAdmin);
 
 module.exports = router;
