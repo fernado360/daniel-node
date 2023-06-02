@@ -71,9 +71,28 @@ If you did not create an account, then ignore this email.`;
   await sendEmail(to, subject, text, htmlToSend);
 };
 
+const sendNotificationEmail = async (email, message) => {
+  const subject = 'Notification';
+  const text = `Dear user,
+  You have a new notification`;
+
+  const __dirname = path.resolve();
+  const filePath = path.join(__dirname, '/src/emails/notification.html');
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const source = fs.readFileSync(filePath, 'utf-8').toString();
+  const template = handlebars.compile(source);
+  const replacement = {
+    message,
+  };
+  const htmlToSend = template(replacement);
+
+  await sendEmail(email, subject, text, htmlToSend);
+};
+
 module.exports = {
   transport,
   sendEmail,
   sendResetPasswordEmail,
   sendVerificationEmail,
+  sendNotificationEmail,
 };

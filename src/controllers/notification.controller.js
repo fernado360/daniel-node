@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const { userService } = require('../services');
+const { emailService } = require('../services');
 // const pick = require('../utils/pick');
 const logger = require('../config/logger');
 const ApiError = require('../utils/ApiError');
@@ -22,6 +23,10 @@ const addNotificationByAdmin = catchAsync(async (req, res) => {
   logger.info(user);
   user.notification.push({ ...req.body });
   user.save();
+  await emailService.sendNotificationEmail(user.email, user.notification).then((resp) => {
+    logger.info('Email Sent');
+    logger.info(resp);
+  });
   res.send(user.notification);
 });
 
