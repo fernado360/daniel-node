@@ -15,14 +15,14 @@ const addNotification = catchAsync(async (req, res) => {
   res.send(user.notification);
 });
 const addNotificationByAdmin = catchAsync(async (req, res) => {
-  const user = await userService.getUserById(req.query.id);
+  const user = await userService.getUserById(req.params.id);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  logger.info(user, res);
-  // user.notification.push({ ...req.body });
-  // user.save();
-  // res.send(user.notification);
+  logger.info(user);
+  user.notification.push({ ...req.body });
+  user.save();
+  res.send(user.notification);
 });
 
 const getNotification = catchAsync(async (req, res) => {
