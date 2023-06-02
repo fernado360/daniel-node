@@ -13,11 +13,11 @@ const addNotification = catchAsync(async (req, res) => {
   }
   user.notification.push({ ...req.body });
   user.save();
-  await emailService.sendNotificationEmail(user.email, req.body).then((resp) => {
+  await emailService.sendNotificationEmail(user.email, req.body.message).then((resp) => {
     logger.info('Email Sent');
     logger.info(resp);
   });
-  await emailService.sendNotificationEmail(user.email, req.body).then((resp) => {
+  await emailService.sendNotificationEmail(user.email, req.body.message).then((resp) => {
     logger.info('Email Sent again');
     logger.info(resp);
   });
@@ -31,11 +31,11 @@ const addNotificationByAdmin = catchAsync(async (req, res) => {
 
   user.notification.push({ ...req.body });
   user.save();
-  await emailService.sendNotificationEmail(user.email, req.body).then((resp) => {
+  await emailService.sendNotificationEmail(user.email, req.body.message).then((resp) => {
     logger.info('Email Sent');
     logger.info(resp);
   });
-  await emailService.sendNotificationEmail(user.email, req.body).then((resp) => {
+  await emailService.sendNotificationEmail(user.email, req.body.message).then((resp) => {
     logger.info('Email Sent again');
     logger.info(resp);
   });
