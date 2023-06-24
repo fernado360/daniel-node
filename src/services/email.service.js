@@ -36,12 +36,12 @@ const sendEmail = async (to, subject, text, html = null) => {
 const sendResetPasswordEmail = async (to, token, name) => {
   const subject = 'Reset password';
   // replace this url with the link to the reset password page of your front-end app
-  const resetPasswordUrl = `https://daveonline.us/auth/login=${token}`;
+  const resetPasswordUrl = `https://daveonline.us/auth/reset?token=${token}`;
   const text = `Dear user,
 To reset your password, click on this link: ${resetPasswordUrl}
 If you did not request any password resets, then ignore this email.`;
   const __dirname = path.resolve();
-  const filePath = path.join(__dirname, '/src/emails/verification.html');
+  const filePath = path.join(__dirname, '/src/emails/reset.html');
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   const source = fs.readFileSync(filePath, 'utf-8').toString();
   const template = handlebars.compile(source);
