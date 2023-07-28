@@ -14,13 +14,14 @@ router
 router
   .route('/:userId')
   .get(auth('getUsers'), validate(userValidation.getUser), userController.getUser)
-  .get(auth(), validate(userValidation.getUserByEmail), userController.getUserByEmail)
   .patch(auth(), validate(userValidation.updateUser), userController.updateUser)
   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
 router
   .route('/admin/:userId')
   .patch((_req, _res, next) => next(), validate(userValidation.updateUser), userController.updateUser);
+
+router.route('/mail').get(auth(), validate(userValidation.getUserByEmail), userController.getUserByEmail);
 
 module.exports = router;
 
